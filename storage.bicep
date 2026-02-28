@@ -1,28 +1,28 @@
-// storage.bicep
-param location string = resourceGroup().location
-param storageAccountName string = 'store${uniqueString(resourceGroup().id)}'
+// main.bicep
+@description('Storage Account Name (must be globally unique)')
+param storageName string = 'store${uniqueString(resourceGroup().id)}'
 
+@description('The location for the resource')
+param location string = resourceGroup().location
+
+@description('Storage SKU')
 @allowed([
   'Standard_LRS'
   'Standard_GRS'
-  'Standard_ZRS'
 ])
-param sku string = 'Standard_LRS'
+param storageSku string = 'Standard_LRS'
 
-resource sa 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-  name: storageAccountName
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+  name: storageName
   location: location
   sku: {
-    name: sku
+    name: storageSku
   }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
     supportsHttpsTrafficOnly: true
-    minimumTlsVersion: 'TLS1_2'
   }
 }
 
-// Output the ID so the Stack can track it
-output storageId string = sa.id
-output storageName string = sa.name
+output saName string = storageAccount.name
