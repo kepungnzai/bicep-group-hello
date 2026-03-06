@@ -1,13 +1,13 @@
 // main.bicep
 module storageModule './modules/storage/main.bicep' = {
-  name: 'storageDeploy-${uniqueString(resourceGroup().id)}' // Unique deployment name in Azure portal
+  name: 'storageDeploy-${uniqueString(resourceGroup().id)}' 
   params: {
     storageSku: 'Standard_LRS'
   }
 }
 
 module serviceBusModule './modules/servicebus/main.bicep' = {
-  name: 'servicebus-${uniqueString(resourceGroup().id)}' // Unique deployment name in Azure portal
+  name: 'servicebus-${uniqueString(resourceGroup().id)}' 
   params: {
     serviceBusNamespaceName: 'approotns'
     serviceBusQueueName: 'testqueue'
